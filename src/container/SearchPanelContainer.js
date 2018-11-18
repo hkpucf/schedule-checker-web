@@ -32,7 +32,8 @@ class SearchPanelContainer extends Component {
 		})
 	}
 
-	onSubmit() {
+	onSubmit(e) {
+		e.preventDefault();
 		if(this.props.onSearch) {
 			this.props.onSearch(this.state.date, this.state.start, this.state.end);
 		}

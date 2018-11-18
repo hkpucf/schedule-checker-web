@@ -8,6 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const styles = {
+	form: {
+		margin: 0
+	},
 	textField: {
 		width: '100%'
 	}
@@ -16,50 +19,58 @@ const styles = {
 const SearchPanel = (props) => {
 	return (
 		<Card>
-			<CardContent>
-				<div>
-					<TextField
-						label="Date"
-						type="date"
-						className={props.classes.textField}
-						defaultValue={props.date}
-						onChange={(e) => {
-							if(props.onChangeDate) {
-								props.onChangeDate(e.target.value);
-							}
-						}}
-					/>
-				</div>
-				<div>
-					<TextField
-						label="Start Time"
-						type="time"
-						className={props.classes.textField}
-						defaultValue={props.start}
-						onChange={(e) => {
-							if(props.onChangeStart) {
-								props.onChangeStart(e.target.value);
-							}
-						}}
-					/>
-				</div>
-				<div>
-					<TextField
-						label="End Time"
-						type="time"
-						className={props.classes.textField}
-						defaultValue={props.end}
-						onChange={(e) => {
-							if(props.onChangeEnd) {
-								props.onChangeEnd(e.target.value);
-							}
-						}}
-					/>
-				</div>
-			</CardContent>
-			<CardActions>
-				<Button size="small" color="primary" onClick={props.onSubmit || null}>Search</Button>
-			</CardActions>
+			<form className={props.classes.form} onSubmit={props.onSubmit || null}>
+				<CardContent>
+					<div>
+						<TextField
+							label="Date"
+							type="date"
+							className={props.classes.textField}
+							defaultValue={props.date}
+							onChange={(e) => {
+								if(props.onChangeDate) {
+									props.onChangeDate(e.target.value);
+								}
+							}}
+						/>
+					</div>
+					<div>
+						<TextField
+							label="Start Time"
+							type="time"
+							className={props.classes.textField}
+							defaultValue={props.start}
+							onChange={(e) => {
+								if(props.onChangeStart) {
+									props.onChangeStart(e.target.value);
+								}
+							}}
+						/>
+					</div>
+					<div>
+						<TextField
+							label="End Time"
+							type="time"
+							className={props.classes.textField}
+							defaultValue={props.end}
+							onChange={(e) => {
+								if(props.onChangeEnd) {
+									props.onChangeEnd(e.target.value);
+								}
+							}}
+						/>
+					</div>
+				</CardContent>
+				<CardActions>
+					<Button
+						size="small"
+						color="primary"
+						type="submit"
+						onClick={props.onSubmit || null}>
+							Search
+					</Button>
+				</CardActions>
+			</form>
 		</Card>
 	);
 }
