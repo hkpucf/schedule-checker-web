@@ -10,17 +10,22 @@ class App extends Component {
 		super();
 
 		this.state = {
+			fetching: false,
+			fetchedList: []
 		};
+	}
+
+	onSearch(date, start, end) {
 	}
 
 	render() {
 		return (
 			<Grid container spacing={24}>
-				<Grid item xs={12} sm={4}>
-					<SearchPanelContainer />
+				<Grid item xs={12} md={4}>
+					<SearchPanelContainer onSearch={this.onSearch} />
 				</Grid>
-				<Grid item xs={12} sm={8}>
-					<RoomListContainer />
+				<Grid item xs={12} md={8}>
+					<RoomListContainer list={this.state.fetchedList} />
 				</Grid>
 			</Grid>
 		);
