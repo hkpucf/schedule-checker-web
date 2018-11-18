@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import RoomList from '../component/RoomList.js'
 
 class RoomListContainer extends Component {
@@ -8,9 +9,13 @@ class RoomListContainer extends Component {
 
 	render() {
 		return (
-			<RoomList />
+			<RoomList list={this.props.list} />
 		);
 	}
+}
+
+RoomListContainer.propTypes = {
+	list: PropTypes.array.isRequired
 }
 
 export default RoomListContainer;
