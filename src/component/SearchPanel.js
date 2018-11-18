@@ -1,40 +1,78 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const SearchPanel = () => {
-	let date = new Date();
-	let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+const styles = {
+	textField: {
+		width: '100%'
+	}
+};
+
+const SearchPanel = (props) => {
 	return (
 		<Card>
 			<CardContent>
-				<TextField
-					label="Date"
-					type="date"
-					defaultValue={today}
-					onChange={(e) => {console.log(e.target.value)}}
-				/>
-				<TextField
-					label="Start Time"
-					type="time"
-					defaultValue="08:30"
-					onChange={(e) => {console.log(e.target.value)}}
-				/>
-				<TextField
-					label="End Time"
-					type="time"
-					defaultValue="22:00"
-					onChange={(e) => {console.log(e.target.value)}}
-				/>
+				<div>
+					<TextField
+						label="Date"
+						type="date"
+						className={props.classes.textField}
+						defaultValue={props.date}
+						onChange={(e) => {
+							if(props.onChangeDate) {
+								props.onChangeDate(e.target.value);
+							}
+						}}
+					/>
+				</div>
+				<div>
+					<TextField
+						label="Start Time"
+						type="time"
+						className={props.classes.textField}
+						defaultValue={props.start}
+						onChange={(e) => {
+							if(props.onChangeStart) {
+								props.onChangeStart(e.target.value);
+							}
+						}}
+					/>
+				</div>
+				<div>
+					<TextField
+						label="End Time"
+						type="time"
+						className={props.classes.textField}
+						defaultValue={props.end}
+						onChange={(e) => {
+							if(props.onChangeEnd) {
+								props.onChangeEnd(e.target.value);
+							}
+						}}
+					/>
+				</div>
 			</CardContent>
 			<CardActions>
-				<Button size="small" color="primary">Search</Button>
+				<Button size="small" color="primary" onClick={props.onSubmit || null}>Search</Button>
 			</CardActions>
 		</Card>
 	);
 }
 
-export default SearchPanel;
+SearchPanel.propTypes = {
+	classes: PropTypes.object.isRequired,
+	date: PropTypes.string.isRequired,
+	start: PropTypes.string.isRequired,
+	end: PropTypes.string.isRequired,
+	onChangeDate: PropTypes.func,
+	onChangeStart: PropTypes.func,
+	onChangeEnd: PropTypes.func,
+	onSubmit: PropTypes.func
+};
+
+export default withStyles(styles)(SearchPanel);
