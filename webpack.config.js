@@ -27,12 +27,6 @@ module.exports = {
 				test: /\.js(\?.*)?$/i,
 				parallel: true,
 				uglifyOptions: {
-					compress: {
-						warnings: false,
-						pure_getters: true,
-						unsafe: true,
-						unsafe_comps: true
-					},
 					output: {
 						comments: false
 					}
