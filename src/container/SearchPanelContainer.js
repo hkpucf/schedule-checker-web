@@ -41,6 +41,14 @@ class SearchPanelContainer extends Component {
 			this.setState({
 				startErr: 'Start time is required'
 			});
+			return;
+		}
+
+		let timeVal = parseInt(startStr.slice(0, 2) + startStr.slice(-2));
+		if(timeVal < 830 || timeVal > 2130) {
+			this.setState({
+				startErr: 'Time must be between 08:30 - 21:30'
+			});
 		} else {
 			this.setState({
 				start: startStr,
@@ -53,6 +61,14 @@ class SearchPanelContainer extends Component {
 		if(endStr == null || endStr.length == 0) {
 			this.setState({
 				endErr: 'End time is required'
+			});
+			return;
+		}
+
+		let timeVal = parseInt(endStr.slice(0, 2) + endStr.slice(-2));
+		if(timeVal < 900 || timeVal > 2200) {
+			this.setState({
+				endErr: 'Time must be between 09:00 - 22:00'
 			});
 		} else {
 			this.setState({
