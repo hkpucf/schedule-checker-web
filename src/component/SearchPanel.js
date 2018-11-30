@@ -11,8 +11,11 @@ const styles = {
 	form: {
 		margin: 0
 	},
+	contentCard: {
+		padding: '16px 24px 8px'
+	},
 	textField: {
-		width: '100%'
+		margin: '3px 0'
 	}
 };
 
@@ -20,13 +23,19 @@ const SearchPanel = (props) => {
 	return (
 		<Card>
 			<form className={props.classes.form} onSubmit={props.onSubmit || null}>
-				<CardContent>
+				<CardContent className={props.classes.contentCard}>
 					<div>
 						<TextField
 							label="Date"
 							type="date"
+							fullWidth
 							className={props.classes.textField}
 							defaultValue={props.date}
+							error = {props.dateErr != null}
+							helperText = {props.dateErr || " "}
+							InputLabelProps={{
+								shrink: true
+							}}
 							onChange={(e) => {
 								if(props.onChangeDate) {
 									props.onChangeDate(e.target.value);
@@ -38,8 +47,14 @@ const SearchPanel = (props) => {
 						<TextField
 							label="Start Time"
 							type="time"
+							fullWidth
 							className={props.classes.textField}
 							defaultValue={props.start}
+							error = {props.startErr != null}
+							helperText = {props.startErr || " "}
+							InputLabelProps={{
+								shrink: true
+							}}
 							onChange={(e) => {
 								if(props.onChangeStart) {
 									props.onChangeStart(e.target.value);
@@ -51,8 +66,14 @@ const SearchPanel = (props) => {
 						<TextField
 							label="End Time"
 							type="time"
+							fullWidth
 							className={props.classes.textField}
 							defaultValue={props.end}
+							error = {props.endErr != null}
+							helperText = {props.endErr || " "}
+							InputLabelProps={{
+								shrink: true
+							}}
 							onChange={(e) => {
 								if(props.onChangeEnd) {
 									props.onChangeEnd(e.target.value);
@@ -80,6 +101,9 @@ SearchPanel.propTypes = {
 	date: PropTypes.string.isRequired,
 	start: PropTypes.string.isRequired,
 	end: PropTypes.string.isRequired,
+	dateErr: PropTypes.string,
+	startErr: PropTypes.string,
+	endErr: PropTypes.string,
 	onChangeDate: PropTypes.func,
 	onChangeStart: PropTypes.func,
 	onChangeEnd: PropTypes.func,
