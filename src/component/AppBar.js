@@ -16,7 +16,7 @@ const styles = {
 
 let AppBar = (props) => {
 	return (
-		<MUIAppBar position="static">
+		<MUIAppBar>
 			<Toolbar>
 				<Typography variant="h6" color="inherit" className={props.classes.grow}>
 					Room Search(Beta)

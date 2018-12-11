@@ -30,7 +30,7 @@ const styles = (theme) => ({
 		flexGrow: 1
 	},
 	gridWrapper: {
-		padding: 24
+		padding: '88 24 24'
 	},
 	grid: {
 		position: 'relative'
