@@ -20,12 +20,6 @@ let emptyList = () => (
 let displayList = (list) => (
 	<div>
 		{list.map((row, id) => {
-			var divider = (
-				<Divider />
-			);
-			if(id == list.length - 1) {
-				divider = null;
-			}
 			return (
 				<div key={id}>
 					<ListItem>
@@ -37,7 +31,7 @@ let displayList = (list) => (
 							{row[3]}
 						</Typography>
 					</ListItem>
-					{divider}
+					{(id != list.length - 1) ? (<Divider />) : null}
 				</div>
 			);
 		})}
