@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/search';
 
 const styles = {
 	form: {
@@ -88,6 +89,7 @@ const SearchPanel = (props) => {
 						color="primary"
 						type="submit"
 						onClick={props.onSubmit || null}>
+							<SearchIcon />
 							Search
 					</Button>
 				</CardActions>
