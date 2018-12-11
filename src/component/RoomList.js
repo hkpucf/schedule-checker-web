@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
 let EmptyList = () => (
-	<ListItem>
-		<ListItemText>
-			<Typography component="span" align="center">
-				No records
-			</Typography>
-		</ListItemText>
-	</ListItem>
+	<List>
+		<ListItem>
+			<ListItemText>
+				<Typography component="span" align="center">
+					No records
+				</Typography>
+			</ListItemText>
+		</ListItem>
+	</List>
 );
 
-let DisplayList = (props) => {
+let RoomList = (props) => {
 	let date = new Date(props.date)
 	const monthNames = [
 		"January",
@@ -35,7 +35,7 @@ let DisplayList = (props) => {
 		"December"
 	];
 	return (
-		<div>
+		<List>
 			<ListItem>
 				<ListItemText>
 					<Typography variant="subtitle1" color="textSecondary" gutterBottom>
@@ -59,28 +59,13 @@ let DisplayList = (props) => {
 					</div>
 				);
 			})}
-		</div>
-	);
-}
-
-DisplayList.propTypes = {
-	list: PropTypes.array.isRequired,
-	date: PropTypes.string.isRequired
-}
-
-let RoomList = (props) => {
-	return (
-		<Paper square>
-			<List>
-				{(props.list.length > 0) ? <DisplayList list={props.list} date={props.date} /> : <EmptyList />}
-			</List>
-		</Paper>
+		</List>
 	);
 }
 
 RoomList.propTypes = {
 	list: PropTypes.array.isRequired,
 	date: PropTypes.string.isRequired
-};
+}
 
-export default RoomList;
+export { RoomList, EmptyList };

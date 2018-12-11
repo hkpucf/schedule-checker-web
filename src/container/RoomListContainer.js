@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import RoomList from '../component/RoomList.js'
+import Paper from '@material-ui/core/Paper';
+import { RoomList, EmptyList } from '../component/RoomList.js'
 
-class RoomListContainer extends Component {
-	constructor() {
-		super();
-	}
-
-	render() {
-		return (
-			<RoomList list={this.props.list} date={this.props.date} />
-		);
-	}
+let RoomListContainer = (props) => {
+	return (
+		<Paper square>
+			{(props.list.length > 0) ? <RoomList list={props.list} date={props.date} /> : <EmptyList />}
+		</Paper>
+	);
 }
 
 RoomListContainer.propTypes = {
 	list: PropTypes.array.isRequired,
 	date: PropTypes.string.isRequired
-}
+};
 
 export default RoomListContainer;
