@@ -22,7 +22,7 @@ const styles = {
 
 const SearchPanel = (props) => {
 	return (
-		<Card>
+		<Card square>
 			<form className={props.classes.form} onSubmit={props.onSubmit || null}>
 				<CardContent className={props.classes.contentCard}>
 					<div>

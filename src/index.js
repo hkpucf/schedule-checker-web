@@ -34,8 +34,11 @@ class App extends Component {
 
 		this.state = {
 			fetching: false,
-			fetchedList: []
+			fetchedList: [],
+			fetchedDate: ''
 		};
+
+		this.onSearch = this.onSearch.bind(this);
 	}
 
 	onSearch(date, start, end) {
@@ -54,7 +57,8 @@ class App extends Component {
 		).then((res) => {
 			this.setState({
 				fetching: false,
-				fetchedList: res.data || []
+				fetchedList: (res.data || []),
+				fetchedDate: (res.data) ? date : ''
 			});
 		});
 	}
@@ -63,13 +67,13 @@ class App extends Component {
 		return (
 			<Grid container spacing={24}>
 				<Grid item xs={12} md={4}>
-					<SearchPanelContainer onSearch={this.onSearch.bind(this)} />
+					<SearchPanelContainer onSearch={this.onSearch} />
 				</Grid>
 				<Grid item xs={12} md={8} className={this.props.classes.grid}>
 					{
 						(this.state.fetching) ? progressBar(this.props) : null
 					}
-					<RoomListContainer list={this.state.fetchedList} />
+					<RoomListContainer list={this.state.fetchedList} date={this.state.fetchedDate} />
 				</Grid>
 			</Grid>
 		);

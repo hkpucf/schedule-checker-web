@@ -9,13 +9,14 @@ class RoomListContainer extends Component {
 
 	render() {
 		return (
-			<RoomList list={this.props.list} />
+			<RoomList list={this.props.list} date={this.props.date} />
 		);
 	}
 }
 
 RoomListContainer.propTypes = {
-	list: PropTypes.array.isRequired
+	list: PropTypes.array.isRequired,
+	date: PropTypes.string.isRequired
 }
 
 export default RoomListContainer;
