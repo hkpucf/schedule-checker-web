@@ -38,7 +38,7 @@ let DisplayList = (props) => {
 		<div>
 			<ListItem>
 				<ListItemText>
-					<Typography variant="subheading" color="textSecondary" gutterBottom>
+					<Typography variant="subtitle1" color="textSecondary" gutterBottom>
 						{date.getFullYear() + ' ' + monthNames[date.getMonth()] + ' ' + date.getDate()}
 					</Typography>
 				</ListItemText>
