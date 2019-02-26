@@ -19,7 +19,7 @@ let AppBar = (props) => {
 		<MUIAppBar>
 			<Toolbar>
 				<Typography variant="h6" color="inherit" className={props.classes.grow}>
-					Room Search(Beta)
+					Room Search
 				</Typography>
 				<Zoom in={props.hasCopy}>
 					<IconButton color="inherit" onClick={props.onCopy || null}>
