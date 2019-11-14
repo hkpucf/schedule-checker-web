@@ -37,8 +37,8 @@ const styles = (theme) => ({
 	},
 	LinearProgress: {
 		position: 'absolute',
-		left: theme.spacing.unit * 1.5,
-		right: theme.spacing.unit * 1.5
+		left: theme.spacing(1.5),
+		right: theme.spacing(1.5)
 	}
 });
 
@@ -126,7 +126,7 @@ class App extends Component {
 					<CssBaseline />
 					<AppBar hasCopy={(this.state.fetchedList.length > 0)} onCopy={this.onCopy} />
 					<div className={this.props.classes.gridWrapper}>
-						<Grid container spacing={24}>
+						<Grid container spacing={3}>
 							<Grid item xs={12} md={4}>
 								<SearchPanelContainer onSearch={this.onSearch} />
 							</Grid>
