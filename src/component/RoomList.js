@@ -10,7 +10,7 @@ let EmptyList = () => (
 	<List>
 		<ListItem>
 			<ListItemText>
-				<Typography component="span" align="center">
+				<Typography component="span" variant="body2" align="center" display="block">
 					No records
 				</Typography>
 			</ListItemText>
@@ -45,18 +45,15 @@ let RoomList = (props) => {
 			</ListItem>
 			{props.list.map((row, id) => {
 				return (
-					<div key={id}>
-						<ListItem>
-							<ListItemText
-								primary={row[0] + ' [' + row[1] + ']'}
-								secondary={row[2]}
-							/>
-							<Typography component="span" align="right">
-								{row[3]}
-							</Typography>
-						</ListItem>
-						{(id != props.list.length - 1) ? (<Divider />) : null}
-					</div>
+					<ListItem key={id} divider={(id != props.list.length - 1)}>
+						<ListItemText
+							primary={row[0] + ' [' + row[1] + ']'}
+							secondary={row[2]}
+						/>
+						<Typography component="span" variant="body2" align="right">
+							{row[3]}
+						</Typography>
+					</ListItem>
 				);
 			})}
 		</List>
