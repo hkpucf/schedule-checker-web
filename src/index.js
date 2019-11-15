@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Axios from 'axios';
 import AppBar from './component/AppBar.js';
 import SearchPanelContainer from './container/SearchPanelContainer.js';
-import RoomListContainer from './container/RoomListContainer.js';
+import ResultContainer from './container/ResultContainer.js';
 
 const theme = createMuiTheme({
 	palette: {
@@ -53,25 +53,33 @@ class App extends Component {
 		super();
 
 		this.state = {
-			fetching: false,
-			fetchedList: [],
-			fetchedDate: '',
+			roomList: {
+				fetching: false,
+				fetchedList: [],
+				fetchedDate: ''
+			},
+			selectedRoom: {
+				fetching: false,
+				room: null,
+				timetable: []
+			},
 			showCopyToast: false
 		};
 
 		this.copyHandler = this.copyHandler.bind(this);
 		this.onCopy = this.onCopy.bind(this);
 		this.onSearch = this.onSearch.bind(this);
+		this.onSelectRoom = this.onSelectRoom.bind(this);
 		this.onCloseToast = this.onCloseToast.bind(this);
 	}
 
 	copyHandler(e) {
-		var plaintext = this.state.fetchedDate;
+		var plaintext = this.state.roomList.fetchedDate;
 		plaintext += "\nRoom no.\tCapacity\tFurniture\tTime";
-		var richtext = "<p><b>" + this.state.fetchedDate + "</b></p>";
+		var richtext = "<p><b>" + this.state.roomList.fetchedDate + "</b></p>";
 		richtext += "<table><tr><th>Room no.</th><th>Capacity</th><th>Furniture</th><th>Time</th></tr>"
-		for(var i = 0; i < this.state.fetchedList.length; i++) {
-			let room = this.state.fetchedList[i];
+		for(var i = 0; i < this.state.roomList.fetchedList.length; i++) {
+			let room = this.state.roomList.fetchedList[i];
 			plaintext += '\n' + room[0] + "\t\t" + room[1] + "\t\t" + room[2] + "\t\t" + room[3];
 			richtext += "<tr><td>" + room[0] + "</td><td>" + room[1] + "</td><td>" + room[2] + "</td><td>" + room[3] + "</td></tr>";
 		}
@@ -92,8 +100,14 @@ class App extends Component {
 	}
 
 	onSearch(date, start, end) {
-		this.setState({
-			fetching: true
+		this.setState((prevState) => {
+			let roomList = Object.assign({}, prevState.roomList, {
+				fetching: true
+			})
+
+			return {
+				roomList: roomList
+			}
 		});
 
 		let params = date.split('-');
@@ -106,9 +120,47 @@ class App extends Component {
 			}
 		).then((res) => {
 			this.setState({
-				fetching: false,
-				fetchedList: (res.data || []),
-				fetchedDate: (res.data) ? date : ''
+				roomList: {
+					fetching: false,
+					fetchedList: (res.data || []),
+					fetchedDate: (res.data) ? date : ''
+				},
+				selectedRoom: {
+					fetching: false,
+					room: null,
+					timetable: []
+				}
+			});
+		});
+	}
+
+	onSelectRoom(room, callback) {
+		this.setState({
+			selectedRoom: {
+				fetching: room != null,
+				room: room,
+				timetable: []
+			}
+		}, callback)
+
+		if(room == null) {
+			return
+		}
+
+		let params = this.state.roomList.fetchedDate.split('-');
+		Axios.get(
+			process.env.HOST + '/' + params[0] + '/' + params[1] + '/' + params[2] + '/' + room,
+			{
+				responseType: 'json'
+			}
+		).then((res) => {
+			console.log(res.data)
+			this.setState({
+				selectedRoom: {
+					fetching: false,
+					room: room,
+					timetable: res.data
+				}
 			});
 		});
 	}
@@ -124,7 +176,7 @@ class App extends Component {
 			<MuiThemeProvider theme={theme}>
 				<div className={this.props.classes.root}>
 					<CssBaseline />
-					<AppBar hasCopy={(this.state.fetchedList.length > 0)} onCopy={this.onCopy} />
+					<AppBar hasCopy={(this.state.roomList.fetchedList.length > 0)} onCopy={this.onCopy} />
 					<div className={this.props.classes.gridWrapper}>
 						<Grid container spacing={3}>
 							<Grid item xs={12} md={4}>
@@ -132,9 +184,9 @@ class App extends Component {
 							</Grid>
 							<Grid item xs={12} md={8} className={this.props.classes.grid}>
 								{
-									(this.state.fetching) ? progressBar(this.props) : null
+									(this.state.roomList.fetching || (this.state.selectedRoom && this.state.selectedRoom.fetching)) ? progressBar(this.props) : null
 								}
-								<RoomListContainer list={this.state.fetchedList} date={this.state.fetchedDate} />
+								<ResultContainer roomList={this.state.roomList} selectedRoom={this.state.selectedRoom} onSelectRoom={this.onSelectRoom} />
 							</Grid>
 						</Grid>
 					</div>

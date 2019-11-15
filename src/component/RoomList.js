@@ -45,7 +45,13 @@ let RoomList = (props) => {
 			</ListItem>
 			{props.list.map((row, id) => {
 				return (
-					<ListItem key={id} divider={(id != props.list.length - 1)}>
+					<ListItem
+						key={id}
+						divider={(id != props.list.length - 1)}
+						button={(props.onSelectRoom != null)}
+						onClick={() => {
+							props.onSelectRoom(row[0])
+						}}>
 						<ListItemText
 							primary={row[0] + ' [' + row[1] + ']'}
 							secondary={row[2]}
@@ -62,7 +68,8 @@ let RoomList = (props) => {
 
 RoomList.propTypes = {
 	list: PropTypes.array.isRequired,
-	date: PropTypes.string.isRequired
+	date: PropTypes.string.isRequired,
+	onSelectRoom: PropTypes.func
 }
 
 export { RoomList, EmptyList };

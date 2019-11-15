@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import SearchPanel from '../component/SearchPanel.js'
 
 class SearchPanelContainer extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 
 		let date = new Date();
 
