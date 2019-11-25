@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import teal from '@material-ui/core/colors/teal';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import SnackBar from '@material-ui/core/SnackBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,6 +12,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Axios from 'axios';
 import AppBar from './component/AppBar.js';
 import SearchPanelContainer from './container/SearchPanelContainer.js';
+import ProgressBar from './component/ProgressBar.js';
 import ResultContainer from './container/ResultContainer.js';
 
 const theme = createMuiTheme({
@@ -26,27 +26,13 @@ const theme = createMuiTheme({
 });
 
 const styles = (theme) => ({
-	root: {
-		flexGrow: 1
-	},
 	gridWrapper: {
-		padding: '88 24 24'
+		padding: '88px 24px 24px'
 	},
 	grid: {
 		position: 'relative'
-	},
-	LinearProgress: {
-		position: 'absolute',
-		left: theme.spacing(1.5),
-		right: theme.spacing(1.5)
 	}
 });
-
-const progressBar = (props) => (
-	<div className={props.classes.LinearProgress}>
-		<LinearProgress />
-	</div>
-);
 
 class App extends Component {
 	constructor() {
@@ -154,7 +140,6 @@ class App extends Component {
 				responseType: 'json'
 			}
 		).then((res) => {
-			console.log(res.data)
 			this.setState({
 				selectedRoom: {
 					fetching: false,
@@ -174,38 +159,36 @@ class App extends Component {
 	render() {
 		return (
 			<MuiThemeProvider theme={theme}>
-				<div className={this.props.classes.root}>
-					<CssBaseline />
-					<AppBar hasCopy={(this.state.roomList.fetchedList.length > 0)} onCopy={this.onCopy} />
-					<div className={this.props.classes.gridWrapper}>
-						<Grid container spacing={3}>
-							<Grid item xs={12} md={4}>
-								<SearchPanelContainer onSearch={this.onSearch} />
-							</Grid>
-							<Grid item xs={12} md={8} className={this.props.classes.grid}>
-								{
-									(this.state.roomList.fetching || (this.state.selectedRoom && this.state.selectedRoom.fetching)) ? progressBar(this.props) : null
-								}
-								<ResultContainer roomList={this.state.roomList} selectedRoom={this.state.selectedRoom} onSelectRoom={this.onSelectRoom} />
-							</Grid>
+				<CssBaseline />
+				<AppBar hasCopy={(this.state.roomList.fetchedList.length > 0)} onCopy={this.onCopy} />
+				<div className={this.props.classes.gridWrapper}>
+					<Grid container spacing={3}>
+						<Grid item xs={12} md={4}>
+							<SearchPanelContainer onSearch={this.onSearch} />
 						</Grid>
-					</div>
-					<SnackBar
-						anchorOrigin={{
-							vertical: "bottom",
-							horizontal: "left"
-						}}
-						open={this.state.showCopyToast}
-						autoHideDuration={6000}
-						onClose={this.onCloseToast}
-						message={<span>Copied</span>}
-						action={
-							<IconButton color="inherit" onClick={this.onCloseToast}>
-								<CloseIcon />
-							</IconButton>
-						}
-					/>
+						<Grid item xs={12} md={8} className={this.props.classes.grid}>
+							{
+								(this.state.roomList.fetching || (this.state.selectedRoom && this.state.selectedRoom.fetching)) ? <ProgressBar /> : null
+							}
+							<ResultContainer roomList={this.state.roomList} selectedRoom={this.state.selectedRoom} onSelectRoom={this.onSelectRoom} />
+						</Grid>
+					</Grid>
 				</div>
+				<SnackBar
+					anchorOrigin={{
+						vertical: "bottom",
+						horizontal: "left"
+					}}
+					open={this.state.showCopyToast}
+					autoHideDuration={6000}
+					onClose={this.onCloseToast}
+					message={<span>Copied</span>}
+					action={
+						<IconButton color="inherit" onClick={this.onCloseToast}>
+							<CloseIcon />
+						</IconButton>
+					}
+				/>
 			</MuiThemeProvider>
 		);
 	}
