@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Paper from '@material-ui/core/Paper'
 import { animateScroll as Scroll, Events as ScrollEvents } from 'react-scroll'
 import { RoomList, EmptyList } from '../component/RoomList.js'
 import Timetable from '../component/Timetable.js'
 
 class ResultContainer extends Component {
 	constructor(props) {
-		super(props);
+		super(props)
 
 		this.state = {
 			lastScrollTop: -1
@@ -65,7 +65,7 @@ class ResultContainer extends Component {
 			<Paper square>
 				{this.getChild()}
 			</Paper>
-		);
+		)
 	}
 }
 
@@ -73,6 +73,6 @@ ResultContainer.propTypes = {
 	roomList: PropTypes.object.isRequired,
 	selectedRoom: PropTypes.object.isRequired,
 	onSelectRoom: PropTypes.func
-};
+}
 
-export default ResultContainer;
+export default ResultContainer

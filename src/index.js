@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import ReactDom from 'react-dom';
-import PropTypes from 'prop-types';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import teal from '@material-ui/core/colors/teal';
-import Grid from '@material-ui/core/Grid';
-import SnackBar from '@material-ui/core/SnackBar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Axios from 'axios';
-import AppBar from './component/AppBar.js';
-import SearchPanelContainer from './container/SearchPanelContainer.js';
-import ProgressBar from './component/ProgressBar.js';
-import ResultContainer from './container/ResultContainer.js';
+import React, { Component } from 'react'
+import ReactDom from 'react-dom'
+import PropTypes from 'prop-types'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles'
+import blue from '@material-ui/core/colors/blue'
+import teal from '@material-ui/core/colors/teal'
+import Grid from '@material-ui/core/Grid'
+import SnackBar from '@material-ui/core/SnackBar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import Axios from 'axios'
+import AppBar from './component/AppBar.js'
+import SearchPanelContainer from './container/SearchPanelContainer.js'
+import ProgressBar from './component/ProgressBar.js'
+import ResultContainer from './container/ResultContainer.js'
 
 const theme = createMuiTheme({
 	palette: {
@@ -23,7 +23,7 @@ const theme = createMuiTheme({
 	typography: {
 		useNextVariants: true
 	}
-});
+})
 
 const styles = (theme) => ({
 	gridWrapper: {
@@ -32,11 +32,11 @@ const styles = (theme) => ({
 	grid: {
 		position: 'relative'
 	}
-});
+})
 
 class App extends Component {
 	constructor() {
-		super();
+		super()
 
 		this.state = {
 			roomList: {
@@ -50,39 +50,39 @@ class App extends Component {
 				timetable: []
 			},
 			showCopyToast: false
-		};
+		}
 
-		this.copyHandler = this.copyHandler.bind(this);
-		this.onCopy = this.onCopy.bind(this);
-		this.onSearch = this.onSearch.bind(this);
-		this.onSelectRoom = this.onSelectRoom.bind(this);
-		this.onCloseToast = this.onCloseToast.bind(this);
+		this.copyHandler = this.copyHandler.bind(this)
+		this.onCopy = this.onCopy.bind(this)
+		this.onSearch = this.onSearch.bind(this)
+		this.onSelectRoom = this.onSelectRoom.bind(this)
+		this.onCloseToast = this.onCloseToast.bind(this)
 	}
 
 	copyHandler(e) {
-		var plaintext = this.state.roomList.fetchedDate;
-		plaintext += "\nRoom no.\tCapacity\tFurniture\tTime";
-		var richtext = "<p><b>" + this.state.roomList.fetchedDate + "</b></p>";
+		var plaintext = this.state.roomList.fetchedDate
+		plaintext += "\nRoom no.\tCapacity\tFurniture\tTime"
+		var richtext = "<p><b>" + this.state.roomList.fetchedDate + "</b></p>"
 		richtext += "<table><tr><th>Room no.</th><th>Capacity</th><th>Furniture</th><th>Time</th></tr>"
 		for(var i = 0; i < this.state.roomList.fetchedList.length; i++) {
-			let room = this.state.roomList.fetchedList[i];
-			plaintext += '\n' + room[0] + "\t\t" + room[1] + "\t\t" + room[2] + "\t\t" + room[3];
-			richtext += "<tr><td>" + room[0] + "</td><td>" + room[1] + "</td><td>" + room[2] + "</td><td>" + room[3] + "</td></tr>";
+			let room = this.state.roomList.fetchedList[i]
+			plaintext += '\n' + room[0] + "\t\t" + room[1] + "\t\t" + room[2] + "\t\t" + room[3]
+			richtext += "<tr><td>" + room[0] + "</td><td>" + room[1] + "</td><td>" + room[2] + "</td><td>" + room[3] + "</td></tr>"
 		}
-		richtext += "</table>";
+		richtext += "</table>"
 
-		e.clipboardData.setData('text/plain', plaintext);
-		e.clipboardData.setData('text/html', richtext);
+		e.clipboardData.setData('text/plain', plaintext)
+		e.clipboardData.setData('text/html', richtext)
 		this.setState({
 			showCopyToast: true
-		});
-		e.preventDefault();
+		})
+		e.preventDefault()
 	}
 
 	onCopy() {
-		document.addEventListener('copy', this.copyHandler);
-		document.execCommand('copy');
-		document.removeEventListener('copy', this.copyHandler);
+		document.addEventListener('copy', this.copyHandler)
+		document.execCommand('copy')
+		document.removeEventListener('copy', this.copyHandler)
 	}
 
 	onSearch(date, start, end) {
@@ -94,11 +94,11 @@ class App extends Component {
 			return {
 				roomList: roomList
 			}
-		});
+		})
 
-		let params = date.split('-');
-		start = start.replace(':', '');
-		end = end.replace(':', '');
+		let params = date.split('-')
+		start = start.replace(':', '')
+		end = end.replace(':', '')
 		Axios.get(
 			process.env.HOST + '/' + params[0] + '/' + params[1] + '/' + params[2] + '/' + start + '/' + end,
 			{
@@ -116,8 +116,8 @@ class App extends Component {
 					room: null,
 					timetable: []
 				}
-			});
-		});
+			})
+		})
 	}
 
 	onSelectRoom(room, callback) {
@@ -133,7 +133,7 @@ class App extends Component {
 			return
 		}
 
-		let params = this.state.roomList.fetchedDate.split('-');
+		let params = this.state.roomList.fetchedDate.split('-')
 		Axios.get(
 			process.env.HOST + '/' + params[0] + '/' + params[1] + '/' + params[2] + '/' + room,
 			{
@@ -146,8 +146,8 @@ class App extends Component {
 					room: room,
 					timetable: res.data
 				}
-			});
-		});
+			})
+		})
 	}
 
 	onCloseToast() {
@@ -190,17 +190,17 @@ class App extends Component {
 					}
 				/>
 			</MuiThemeProvider>
-		);
+		)
 	}
 }
 
 App.propTypes = {
 	classes: PropTypes.object.isRequired
-};
+}
 
-App = withStyles(styles)(App);
+App = withStyles(styles)(App)
 
 document.addEventListener('DOMContentLoaded', ()=>{
-	let containerDOM = document.getElementById('scheduleApp');
-	containerDOM ? ReactDom.render(<App />, containerDOM) : false;
-});
+	let containerDOM = document.getElementById('scheduleApp')
+	containerDOM ? ReactDom.render(<App />, containerDOM) : false
+})

@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
 import MUIAppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Zoom from '@material-ui/core/Zoom';
-import IconButton from '@material-ui/core/IconButton';
-import CopyIcon from '@material-ui/icons/fileCopy';
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Zoom from '@material-ui/core/Zoom'
+import IconButton from '@material-ui/core/IconButton'
+import CopyIcon from '@material-ui/icons/fileCopy'
 
 const styles = {
 	grow: {
@@ -28,8 +28,8 @@ let AppBar = (props) => {
 				</Zoom>
 			</Toolbar>
 		</MUIAppBar>
-	);
-};
+	)
+}
 
 AppBar.propTypes = {
 	classes: PropTypes.object.isRequired,
@@ -37,4 +37,4 @@ AppBar.propTypes = {
 	onCopy: PropTypes.func
 }
 
-export default withStyles(styles)(AppBar);
+export default withStyles(styles)(AppBar)

@@ -4,9 +4,9 @@ import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/c
 
 let TimetableDetail = () => {
 	Number.prototype.pad = function(size) {
-		var s = String(this);
-		while (s.length < (size || 2)) {s = "0" + s;}
-		return s;
+		var s = String(this)
+		while (s.length < (size || 2)) {s = "0" + s}
+		return s
 	}
 
 	let getTimeByIndex = (index) => {
@@ -52,4 +52,4 @@ Timetable.propTypes = {
 	timetable: PropTypes.array.isRequired
 }
 
-export default Timetable;
+export default Timetable

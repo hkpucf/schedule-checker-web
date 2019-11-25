@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import SearchIcon from '@material-ui/icons/search';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import SearchIcon from '@material-ui/icons/search'
 
 const styles = {
 	form: {
@@ -18,7 +18,7 @@ const styles = {
 	textField: {
 		margin: '3px 0'
 	}
-};
+}
 
 const SearchPanel = (props) => {
 	return (
@@ -39,7 +39,7 @@ const SearchPanel = (props) => {
 							}}
 							onChange={(e) => {
 								if(props.onChangeDate) {
-									props.onChangeDate(e.target.value);
+									props.onChangeDate(e.target.value)
 								}
 							}}
 						/>
@@ -58,7 +58,7 @@ const SearchPanel = (props) => {
 							}}
 							onChange={(e) => {
 								if(props.onChangeStart) {
-									props.onChangeStart(e.target.value);
+									props.onChangeStart(e.target.value)
 								}
 							}}
 						/>
@@ -77,7 +77,7 @@ const SearchPanel = (props) => {
 							}}
 							onChange={(e) => {
 								if(props.onChangeEnd) {
-									props.onChangeEnd(e.target.value);
+									props.onChangeEnd(e.target.value)
 								}
 							}}
 						/>
@@ -95,7 +95,7 @@ const SearchPanel = (props) => {
 				</CardActions>
 			</form>
 		</Card>
-	);
+	)
 }
 
 SearchPanel.propTypes = {
@@ -110,6 +110,6 @@ SearchPanel.propTypes = {
 	onChangeStart: PropTypes.func,
 	onChangeEnd: PropTypes.func,
 	onSubmit: PropTypes.func
-};
+}
 
-export default withStyles(styles)(SearchPanel);
+export default withStyles(styles)(SearchPanel)

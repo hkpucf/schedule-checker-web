@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Typography from '@material-ui/core/Typography'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
 
 let EmptyList = () => (
 	<List>
@@ -16,7 +16,7 @@ let EmptyList = () => (
 			</ListItemText>
 		</ListItem>
 	</List>
-);
+)
 
 let RoomList = (props) => {
 	let date = new Date(props.date)
@@ -33,7 +33,7 @@ let RoomList = (props) => {
 		"October",
 		"November",
 		"December"
-	];
+	]
 	return (
 		<List>
 			<ListItem>
@@ -60,10 +60,10 @@ let RoomList = (props) => {
 							{row[3]}
 						</Typography>
 					</ListItem>
-				);
+				)
 			})}
 		</List>
-	);
+	)
 }
 
 RoomList.propTypes = {
@@ -72,4 +72,4 @@ RoomList.propTypes = {
 	onSelectRoom: PropTypes.func
 }
 
-export { RoomList, EmptyList };
+export { RoomList, EmptyList }
