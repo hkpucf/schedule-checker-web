@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import ReactDom from 'react-dom'
 import PropTypes from 'prop-types'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles'
-import blue from '@material-ui/core/colors/blue'
-import teal from '@material-ui/core/colors/teal'
-import Grid from '@material-ui/core/Grid'
-import SnackBar from '@material-ui/core/SnackBar'
-import IconButton from '@material-ui/core/IconButton'
+import { blue, teal } from '@material-ui/core/colors'
+import { CssBaseline, Grid, Snackbar, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import Axios from 'axios'
 import AppBar from './component/AppBar.js'
@@ -27,7 +23,7 @@ const theme = createMuiTheme({
 
 const styles = (theme) => ({
 	gridWrapper: {
-		padding: '88px 24px 24px'
+		padding: theme.spacing(11, 3, 3)
 	},
 	grid: {
 		position: 'relative'
@@ -174,7 +170,7 @@ class App extends Component {
 						</Grid>
 					</Grid>
 				</div>
-				<SnackBar
+				<Snackbar
 					anchorOrigin={{
 						vertical: "bottom",
 						horizontal: "left"
