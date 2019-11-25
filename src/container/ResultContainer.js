@@ -21,16 +21,15 @@ class ResultContainer extends Component {
 	}
 
 	onSelectRoom(room) {
+		this.setState({
+			lastScrollTop: window.scrollY
+		})
 		ScrollEvents.scrollEvent.register('end', () => {
-			this.setState({
-				lastScrollTop: window.scrollY
-			}, () => {
-				this.props.onSelectRoom && this.props.onSelectRoom(room)
-			})
+			this.props.onSelectRoom && this.props.onSelectRoom(room)
 			ScrollEvents.scrollEvent.remove('end')
 		})
 		Scroll.scrollToTop({
-			smooth: true,
+			smooth: 'easeInOutQuad',
 			duration: 500
 		})
 	}
@@ -54,7 +53,7 @@ class ResultContainer extends Component {
 			return <EmptyList />
 		}
 		if(this.props.selectedRoom.room != null) {
-			return <Timetable fetching={this.props.selectedRoom.fetching} room={this.props.selectedRoom.room} timetable={this.props.selectedRoom.timetable} />
+			return <Timetable fetching={this.props.selectedRoom.fetching} room={this.props.selectedRoom.room} timetable={this.props.selectedRoom.timetable} onBack={this.onBack.bind(this)} />
 		} else {
 			return <RoomList list={this.props.roomList.fetchedList} date={this.props.roomList.fetchedDate} onSelectRoom={this.onSelectRoom.bind(this)} />
 		}
