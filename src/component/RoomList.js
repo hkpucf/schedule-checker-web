@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, List, ListItem, ListItemText, Divider } from '@material-ui/core'
+import { Typography, List, ListItem, ListItemText } from '@material-ui/core'
 
 let EmptyList = () => (
 	<List>

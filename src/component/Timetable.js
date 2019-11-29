@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles'
-import { Table, TableHead, TableBody, TableRow, TableCell, IconButton, Paper, Typography } from '@material-ui/core'
+import { Table, TableBody, TableRow, TableCell, IconButton, Paper, Typography } from '@material-ui/core'
 import BackIcon from '@material-ui/icons/arrowBack'
 
 let Timeslot = (props) => {

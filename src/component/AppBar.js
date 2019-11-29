@@ -21,8 +21,8 @@ let AppBar = (props) => {
 				<Typography variant="h6" color="inherit" className={props.classes.grow}>
 					Room Search
 				</Typography>
-				<Zoom in={props.hasCopy}>
-					<IconButton color="inherit" onClick={props.onCopy || null}>
+				<Zoom in={props.onCopy && props.hasCopy}>
+					<IconButton color="inherit" onClick={props.onCopy}>
 						<CopyIcon />
 					</IconButton>
 				</Zoom>

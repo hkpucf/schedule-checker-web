@@ -41,7 +41,7 @@ class ResultContainer extends Component {
 				lastScrollTop: -1
 			}, () => {
 				Scroll.scrollTo(lastScrollTop, {
-					smooth: true,
+					smooth: 'easeInOutQuad',
 					duration: 500
 				})
 			})
