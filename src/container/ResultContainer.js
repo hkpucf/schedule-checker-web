@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import { animateScroll as Scroll, Events as ScrollEvents } from 'react-scroll'
+import { fetchTimetable, clearTimetable } from '../action'
+import ProgressBar from '../component/ProgressBar.js'
 import { RoomList, EmptyList } from '../component/RoomList.js'
 import Timetable from '../component/Timetable.js'
 
@@ -25,7 +28,7 @@ class ResultContainer extends Component {
 			lastScrollTop: window.scrollY
 		})
 		ScrollEvents.scrollEvent.register('end', () => {
-			this.props.onSelectRoom && this.props.onSelectRoom(room)
+			this.props.onSelectRoom(this.props.roomList.fetchedDate, room)
 			ScrollEvents.scrollEvent.remove('end')
 		})
 		Scroll.scrollToTop({
@@ -36,7 +39,7 @@ class ResultContainer extends Component {
 
 	onBack() {
 		let lastScrollTop = this.state.lastScrollTop
-		this.props.onSelectRoom && this.props.onSelectRoom(null, () => {
+		this.props.onClearRoom().then(() => {
 			this.setState({
 				lastScrollTop: -1
 			}, () => {
@@ -61,9 +64,14 @@ class ResultContainer extends Component {
 
 	render() {
 		return (
-			<Paper square>
-				{this.getChild()}
-			</Paper>
+			<div>
+				{
+					(this.props.roomList.fetching || this.props.selectedRoom.fetching) ? <ProgressBar /> : null
+				}
+				<Paper square>
+					{this.getChild()}
+				</Paper>
+			</div>
 		)
 	}
 }
@@ -71,7 +79,25 @@ class ResultContainer extends Component {
 ResultContainer.propTypes = {
 	roomList: PropTypes.object.isRequired,
 	selectedRoom: PropTypes.object.isRequired,
-	onSelectRoom: PropTypes.func
+	onSelectRoom: PropTypes.func.isRequired,
+	onClearRoom: PropTypes.func.isRequired
 }
 
-export default ResultContainer
+const mapStateToProps = (state) => ({
+	roomList: state.roomList,
+	selectedRoom: state.selectedRoom
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	onSelectRoom: (date, room) => {
+		dispatch(fetchTimetable(date, room))
+	},
+	onClearRoom: () => {
+		return dispatch(clearTimetable())
+	}
+})
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ResultContainer)

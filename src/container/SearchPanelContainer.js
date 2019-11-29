@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { searchRoom } from '../action'
 import SearchPanel from '../component/SearchPanel.js'
 
 class SearchPanelContainer extends Component {
@@ -109,4 +111,13 @@ SearchPanelContainer.propTypes = {
 	onSearch: PropTypes.func
 }
 
-export default SearchPanelContainer
+const mapDispatchToProps = (dispatch) => ({
+	onSearch: (date, start, end) => {
+		dispatch(searchRoom(date, start, end))
+	}
+})
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(SearchPanelContainer)
