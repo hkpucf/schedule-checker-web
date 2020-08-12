@@ -1,6 +1,6 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
 	entry: path.resolve(__dirname, './src/index.js'),
@@ -27,14 +27,15 @@ module.exports = {
 	],
 	optimization: {
 		minimizer: [
-			new UglifyJsPlugin({
-				test: /\.js(\?.*)?$/i,
+			new TerserPlugin({
 				parallel: true,
-				uglifyOptions: {
+				terserOptions: {
+					ecma: 6,
 					output: {
 						comments: false
 					}
-				}
+				},
+				extractComments: false
 			})
 		]
 	}
