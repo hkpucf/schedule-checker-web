@@ -1,19 +1,21 @@
-import React from 'react'
+import React, {
+	memo
+} from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import { Table, TableBody, TableRow, TableCell, IconButton, Paper, Typography } from '@material-ui/core'
 import BackIcon from '@material-ui/icons/arrowBack'
 
-let Timeslot = (props) => {
-	const theme = useTheme()
-	const classes = makeStyles({
-		root: (props) => ({
-			top: props.top * theme.spacing(3.5),
-			height: props.height * theme.spacing(7),
-			padding: theme.spacing(2),
-			background: theme.palette.grey['300']
-		})
-	})(props)
+const useTimeslotStyle = makeStyles((theme) => ({
+	root: (props) => ({
+		top: props.top * theme.spacing(3.5),
+		height: props.height * theme.spacing(7),
+		padding: theme.spacing(2),
+		background: theme.palette.grey['300']
+	})
+}))
+let Timeslot = memo((props) => {
+	const classes = useTimeslotStyle(props)
 
 	return (
 		<Paper elevation={0} className={props.className + ' ' + classes.root}>
@@ -22,7 +24,7 @@ let Timeslot = (props) => {
 			</Typography>
 		</Paper>
 	)
-}
+})
 
 Timeslot.propTypes = {
 	className: PropTypes.string,
@@ -30,7 +32,7 @@ Timeslot.propTypes = {
 	height: PropTypes.number.isRequired
 }
 
-const detailStyles = (theme) => ({
+const useDetailStyles = makeStyles((theme) => ({
 	row: {
 		height: theme.spacing(7)
 	},
@@ -47,9 +49,11 @@ const detailStyles = (theme) => ({
 		left: theme.spacing(2),
 		right: theme.spacing(2)
 	}
-})
+}))
 
-let TimetableDetail = (props) => {
+let TimetableDetail = memo((props) => {
+	const classes = useDetailStyles()
+
 	// Transform function
 	Number.prototype.pad = function(size) {
 		var s = String(this)
@@ -93,11 +97,11 @@ let TimetableDetail = (props) => {
 	for(let i = 17, j = 0; i < 45; i += 2) {
 		if(j < row.length && (row[j].startTime == i || row[j].startTime == i + 1)) {
 			tableRow.push(
-					<TableRow key={i} className={props.classes.row}>
-						<TableCell className={props.classes.timeCol}>{getTimeByIndex(i) + ' - ' + getTimeByIndex(i + 2)}</TableCell>
-						<TableCell className={props.classes.contentCol}>
+					<TableRow key={i} className={classes.row}>
+						<TableCell className={classes.timeCol}>{getTimeByIndex(i) + ' - ' + getTimeByIndex(i + 2)}</TableCell>
+						<TableCell className={classes.contentCol}>
 							<Timeslot
-								className={props.classes.timeslot} 
+								className={classes.timeslot} 
 								top={(row[j].startTime + 1) % 2}
 								height={(row[j].endTime - row[j].startTime) / 2}>
 								Reserved
@@ -108,35 +112,33 @@ let TimetableDetail = (props) => {
 			j++
 		} else {
 			tableRow.push(
-					<TableRow key={i} className={props.classes.row}>
-						<TableCell className={props.classes.timeCol}>{getTimeByIndex(i) + ' - ' + getTimeByIndex(i + 2)}</TableCell>
-						<TableCell className={props.classes.contentCol}></TableCell>
+					<TableRow key={i} className={classes.row}>
+						<TableCell className={classes.timeCol}>{getTimeByIndex(i) + ' - ' + getTimeByIndex(i + 2)}</TableCell>
+						<TableCell className={classes.contentCol}></TableCell>
 					</TableRow>
 				)
 		}
 	}
 	return tableRow
-}
+})
 
 TimetableDetail.propTypes = {
-	classes: PropTypes.object.isRequired,
 	fetching: PropTypes.bool.isRequired,
 	timetable: PropTypes.array.isRequired
 }
 
-TimetableDetail = withStyles(detailStyles)(TimetableDetail)
-
-const timetableStyles = (theme) => ({
+const useTimetableStyles = makeStyles((theme) => ({
 	title: {
 		display: 'flex',
 		alignItems: 'center'
 	}
-})
+}))
 
 let Timetable = (props) => {
+	const classes = useTimetableStyles()
 	return (
 		<div>
-			<div className={props.classes.title}>
+			<div className={classes.title}>
 				<IconButton color="inherit" onClick={props.onBack}>
 					<BackIcon />
 				</IconButton>
@@ -154,11 +156,10 @@ let Timetable = (props) => {
 }
 
 Timetable.propTypes = {
-	classes: PropTypes.object.isRequired,
 	fetching: PropTypes.bool.isRequired,
 	room: PropTypes.string.isRequired,
 	timetable: PropTypes.array.isRequired,
 	onBack: PropTypes.func
 }
 
-export default withStyles(timetableStyles)(Timetable)
+export default Timetable

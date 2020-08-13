@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {
+	memo
+} from 'react'
 import PropTypes from 'prop-types'
 import { Typography, List, ListItem, ListItemText } from '@material-ui/core'
 
-let EmptyList = () => (
+let EmptyList = memo(() => (
 	<List>
 		<ListItem>
 			<ListItemText>
@@ -12,24 +14,26 @@ let EmptyList = () => (
 			</ListItemText>
 		</ListItem>
 	</List>
-)
+))
 
-let RoomList = (props) => {
+const monthNames = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December"
+]
+
+let RoomList = memo((props) => {
 	let date = new Date(props.date)
-	const monthNames = [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December"
-	]
+
 	return (
 		<List>
 			<ListItem>
@@ -60,7 +64,7 @@ let RoomList = (props) => {
 			})}
 		</List>
 	)
-}
+})
 
 RoomList.propTypes = {
 	list: PropTypes.array.isRequired,

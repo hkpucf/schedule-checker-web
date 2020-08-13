@@ -1,17 +1,23 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import {
+	useDispatch,
+	useSelector
+} from 'react-redux'
 import { showToast } from '../action'
 import AppBar from '../component/AppBar.js'
 
 let AppBarContainer = (props) => {
+	const dispatch = useDispatch()
+	const fetchedDate = useSelector(state => state.roomList.fetchedDate)
+	const fetchedList = useSelector(state => state.roomList.fetchedList)
+
 	const copyHandler = (e) => {
-		var plaintext = props.fetchedDate
+		var plaintext = fetchedDate
 		plaintext += "\nRoom no.\tCapacity\tFurniture\tTime"
-		var richtext = "<p><b>" + props.fetchedDate + "</b></p>"
+		var richtext = "<p><b>" + fetchedDate + "</b></p>"
 		richtext += "<table><tr><th>Room no.</th><th>Capacity</th><th>Furniture</th><th>Time</th></tr>"
-		for(var i = 0; i < props.fetchedList.length; i++) {
-			let room = props.fetchedList[i]
+		for(var i = 0; i < fetchedList.length; i++) {
+			let room = fetchedList[i]
 			plaintext += '\n' + room[0] + "\t\t" + room[1] + "\t\t" + room[2] + "\t\t" + room[3]
 			richtext += "<tr><td>" + room[0] + "</td><td>" + room[1] + "</td><td>" + room[2] + "</td><td>" + room[3] + "</td></tr>"
 		}
@@ -19,7 +25,7 @@ let AppBarContainer = (props) => {
 
 		e.clipboardData.setData('text/plain', plaintext)
 		e.clipboardData.setData('text/html', richtext)
-		props.showToast()
+		dispatch(showToast())
 		e.preventDefault()
 	}
 
@@ -30,28 +36,8 @@ let AppBarContainer = (props) => {
 	}
 
 	return (
-		<AppBar hasCopy={(props.fetchedList.length > 0)} onCopy={onCopy} />
+		<AppBar hasCopy={(fetchedList.length > 0)} onCopy={onCopy} />
 	)
 }
 
-AppBarContainer.propTypes = {
-	fetchedDate: PropTypes.string.isRequired,
-	fetchedList: PropTypes.array.isRequired,
-	showToast: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state) => ({
-	fetchedDate: state.roomList.fetchedDate,
-	fetchedList: state.roomList.fetchedList
-})
-
-const mapDispatchToProps = (dispatch) => ({
-	showToast: () => {
-		dispatch(showToast())
-	}
-})
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(AppBarContainer)
+export default AppBarContainer

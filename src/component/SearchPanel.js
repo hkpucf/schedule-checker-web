@@ -1,36 +1,44 @@
-import React from 'react'
+import React, {
+	memo
+} from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import SearchIcon from '@material-ui/icons/search'
+import { makeStyles } from '@material-ui/core/styles'
+import {
+	Card,
+	CardContent,
+	CardActions,
+	TextField,
+	Button
+} from '@material-ui/core'
+import {
+	Search as SearchIcon
+} from '@material-ui/icons'
 
-const styles = {
+const useStyles = makeStyles((theme) => ({
 	form: {
 		margin: 0
 	},
 	contentCard: {
-		padding: '16px 24px 8px'
+		padding: theme.spacing(2, 3, 1)
 	},
 	textField: {
 		margin: '3px 0'
 	}
-}
+}))
 
-const SearchPanel = (props) => {
+const SearchPanel = memo((props) => {
+	const classes = useStyles()
+
 	return (
 		<Card square>
-			<form className={props.classes.form} onSubmit={props.onSubmit || null}>
-				<CardContent className={props.classes.contentCard}>
+			<form className={classes.form} onSubmit={props.onSubmit || null}>
+				<CardContent className={classes.contentCard}>
 					<div>
 						<TextField
 							label="Date"
 							type="date"
 							fullWidth
-							className={props.classes.textField}
+							className={classes.textField}
 							defaultValue={props.date}
 							error = {props.dateErr != null}
 							helperText = {props.dateErr || " "}
@@ -49,7 +57,7 @@ const SearchPanel = (props) => {
 							label="Start Time"
 							type="time"
 							fullWidth
-							className={props.classes.textField}
+							className={classes.textField}
 							defaultValue={props.start}
 							error = {props.startErr != null}
 							helperText = {props.startErr || " "}
@@ -68,7 +76,7 @@ const SearchPanel = (props) => {
 							label="End Time"
 							type="time"
 							fullWidth
-							className={props.classes.textField}
+							className={classes.textField}
 							defaultValue={props.end}
 							error = {props.endErr != null}
 							helperText = {props.endErr || " "}
@@ -96,10 +104,9 @@ const SearchPanel = (props) => {
 			</form>
 		</Card>
 	)
-}
+})
 
 SearchPanel.propTypes = {
-	classes: PropTypes.object.isRequired,
 	date: PropTypes.string.isRequired,
 	start: PropTypes.string.isRequired,
 	end: PropTypes.string.isRequired,
@@ -112,4 +119,4 @@ SearchPanel.propTypes = {
 	onSubmit: PropTypes.func
 }
 
-export default withStyles(styles)(SearchPanel)
+export default SearchPanel

@@ -1,24 +1,31 @@
-import React from 'react'
+import React, {
+	memo
+} from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import MUIAppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Zoom from '@material-ui/core/Zoom'
-import IconButton from '@material-ui/core/IconButton'
-import CopyIcon from '@material-ui/icons/fileCopy'
+import { makeStyles } from '@material-ui/core/styles'
+import {
+	AppBar as MUIAppBar,
+	Toolbar,
+	Typography,
+	Zoom,
+	IconButton
+} from '@material-ui/core'
+import {
+	FileCopy as CopyIcon
+} from '@material-ui/icons'
 
-const styles = {
+const useStyles = makeStyles({
 	grow: {
 		flexGrow: 1
 	}
-}
+})
 
-let AppBar = (props) => {
+let AppBar = memo((props) => {
+	const classes = useStyles()
 	return (
 		<MUIAppBar>
 			<Toolbar>
-				<Typography variant="h6" color="inherit" className={props.classes.grow}>
+				<Typography variant="h6" color="inherit" className={classes.grow}>
 					Room Search
 				</Typography>
 				<Zoom in={props.onCopy && props.hasCopy}>
@@ -29,12 +36,11 @@ let AppBar = (props) => {
 			</Toolbar>
 		</MUIAppBar>
 	)
-}
+})
 
 AppBar.propTypes = {
-	classes: PropTypes.object.isRequired,
 	hasCopy: PropTypes.bool.isRequired,
 	onCopy: PropTypes.func
 }
 
-export default withStyles(styles)(AppBar)
+export default AppBar

@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {
+	memo
+} from 'react'
 import PropTypes from 'prop-types'
 import { Snackbar, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
-const SnackBar = (props) => (
+const SnackBar = memo((props) => (
 	<Snackbar
 		anchorOrigin={{
 			vertical: "bottom",
@@ -19,7 +21,7 @@ const SnackBar = (props) => (
 			</IconButton>
 		}
 	/>
-)
+))
 
 SnackBar.propTypes = {
 	showToast: PropTypes.bool.isRequired,
