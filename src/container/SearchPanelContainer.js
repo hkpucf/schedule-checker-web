@@ -1,123 +1,88 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, {
+	memo,
+	useCallback,
+	useState
+} from 'react'
+import { useDispatch } from 'react-redux'
 import { searchRoom } from '../action'
 import SearchPanel from '../component/SearchPanel.js'
 
-class SearchPanelContainer extends Component {
-	constructor(props) {
-		super(props)
+const SearchPanelContainer = memo((props) => {
+	const dispatch = useDispatch()
+	const now = new Date()
+	const [date, setDate] = useState(now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2))
+	const [dateErr, setDateErr] = useState(null)
 
-		let date = new Date()
-
-		var startTime = '08:30'
-		if((date.getHours() * 100 + date.getMinutes()) > 830 && (date.getHours() * 100 + date.getMinutes()) < 2200) {
-			startTime = ('0' + date.getHours()).slice(-2) + ':' + ((date.getMinutes() < 30) ? '00' : '30')
-		}
-
-		this.state = {
-			date: date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2),
-			dateErr: null,
-			start: startTime,
-			startErr: null,
-			end: '22:00',
-			endErr: null
-		}
+	let startTime = '08:30'
+	if((now.getHours() * 100 + now.getMinutes()) > 830 && (now.getHours() * 100 + now.getMinutes()) < 2200) {
+		startTime = ('0' + now.getHours()).slice(-2) + ':' + ((now.getMinutes() < 30) ? '00' : '30')
 	}
+	const [start, setStart] = useState(startTime)
+	const [startErr, setStartErr] = useState(null)
+	const [end, setEnd] = useState('22:00')
+	const [endErr, setEndErr] = useState(null)
 
-	onChangeDate(dateStr) {
-		if(dateStr == null || dateStr.length == 0) {
-			this.setState({
-				dateErr: 'Date is required'
-			})
-		} else {
-			this.setState({
-				date: dateStr,
-				dateErr: null
-			})
+	const onChangeDate = useCallback((dateStr) => {
+		if(dateStr == null || dateStr.length == 0)
+			setDateErr('Date is required')
+		else {
+			setDate(dateStr)
+			setDateErr(null)
 		}
-	}
+	})
 
-	onChangeStart(startStr) {
+	const onChangeStart = useCallback((startStr) => {
 		if(startStr == null || startStr.length == 0) {
-			this.setState({
-				startErr: 'Start time is required'
-			})
+			setStartErr('Start time is required')
 			return
 		}
 
-		let timeVal = parseInt(startStr.slice(0, 2) + startStr.slice(-2))
-		if(timeVal < 830 || timeVal > 2130) {
-			this.setState({
-				startErr: 'Time must be between 08:30 - 21:30'
-			})
-		} else {
-			this.setState({
-				start: startStr,
-				startErr: null
-			})
+		const timeVal = parseInt(startStr.slice(0, 2) + startStr.slice(-2))
+		if(timeVal < 830 || timeVal > 2130)
+			setStartErr('Time must be between 08:30 - 21:30')
+		else {
+			setStart(startStr)
+			setStartErr(null)
 		}
-	}
+	})
 
-	onChangeEnd(endStr) {
+	const onChangeEnd = useCallback((endStr) => {
 		if(endStr == null || endStr.length == 0) {
-			this.setState({
-				endErr: 'End time is required'
-			})
+			setEndErr('End time is required')
 			return
 		}
 
-		let timeVal = parseInt(endStr.slice(0, 2) + endStr.slice(-2))
-		if(timeVal < 900 || timeVal > 2200) {
-			this.setState({
-				endErr: 'Time must be between 09:00 - 22:00'
-			})
-		} else {
-			this.setState({
-				end: endStr,
-				endErr: null
-			})
+		const timeVal = parseInt(endStr.slice(0, 2) + endStr.slice(-2))
+		if(timeVal < 900 || timeVal > 2200)
+			setEndErr('Time must be between 09:00 - 22:00')
+		else {
+			setEnd(endStr)
+			setEndErr(null)
 		}
-	}
+	})
 
-	onSubmit(e) {
+	const onSubmit = useCallback((e) => {
 		e.preventDefault()
-		if(this.state.dateErr != null || this.state.startErr != null || this.state.endError != null) {
+
+		if(dateErr != null || startErr != null || endErr != null)
 			return
-		}
-		if(this.props.onSearch) {
-			this.props.onSearch(this.state.date, this.state.start, this.state.end)
-		}
-	}
 
-	render() {
-		return (
-			<SearchPanel
-				date={this.state.date}
-				dateErr={this.state.dateErr}
-				start={this.state.start}
-				startErr={this.state.startErr}
-				end={this.state.end}
-				endErr={this.state.endErr}
-				onChangeDate={this.onChangeDate.bind(this)}
-				onChangeStart={this.onChangeStart.bind(this)}
-				onChangeEnd={this.onChangeEnd.bind(this)}
-				onSubmit={this.onSubmit.bind(this)} />
-		)
-	}
-}
-
-SearchPanelContainer.propTypes = {
-	onSearch: PropTypes.func
-}
-
-const mapDispatchToProps = (dispatch) => ({
-	onSearch: (date, start, end) => {
 		dispatch(searchRoom(date, start, end))
-	}
+	})
+
+	return (
+		<SearchPanel
+			date={date}
+			dateErr={dateErr}
+			start={start}
+			startErr={startErr}
+			end={end}
+			endErr={endErr}
+			onChangeDate={onChangeDate}
+			onChangeStart={onChangeStart}
+			onChangeEnd={onChangeEnd}
+			onSubmit={onSubmit} />
+	)
 })
 
-export default connect(
-	null,
-	mapDispatchToProps
-)(SearchPanelContainer)
+export default SearchPanelContainer

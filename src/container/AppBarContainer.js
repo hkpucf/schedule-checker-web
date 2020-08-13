@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {
+	memo
+} from 'react'
 import {
 	useDispatch,
 	useSelector
@@ -6,7 +8,7 @@ import {
 import { showToast } from '../action'
 import AppBar from '../component/AppBar.js'
 
-let AppBarContainer = (props) => {
+let AppBarContainer = memo((props) => {
 	const dispatch = useDispatch()
 	const fetchedDate = useSelector(state => state.roomList.fetchedDate)
 	const fetchedList = useSelector(state => state.roomList.fetchedList)
@@ -38,6 +40,6 @@ let AppBarContainer = (props) => {
 	return (
 		<AppBar hasCopy={(fetchedList.length > 0)} onCopy={onCopy} />
 	)
-}
+})
 
 export default AppBarContainer
