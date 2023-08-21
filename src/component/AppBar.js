@@ -14,6 +14,8 @@ import {
 	FileCopy as CopyIcon
 } from '@material-ui/icons'
 
+import StopServiceAlert from './StopServiceAlert.js'
+
 const useStyles = makeStyles({
 	grow: {
 		flexGrow: 1
@@ -24,6 +26,7 @@ let AppBar = memo((props) => {
 	const classes = useStyles()
 	return (
 		<MUIAppBar>
+			<StopServiceAlert />
 			<Toolbar>
 				<Typography variant="h6" color="inherit" className={classes.grow}>
 					Room Search

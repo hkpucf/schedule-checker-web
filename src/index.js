@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles'
+import { ThemeProvider, createTheme, makeStyles } from '@material-ui/core/styles'
 import { blue, teal } from '@material-ui/core/colors'
 import { CssBaseline, Grid } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
@@ -23,7 +23,7 @@ const store = createStore(
 	)
 )
 
-const theme = createMuiTheme({
+const theme = createTheme({
 	palette: {
 		primary: blue,
 		secondary: teal,
@@ -35,8 +35,8 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
 	gridWrapper: {
-		marginTop: theme.spacing(8),
-		height: 'calc(100vh - 64px)',
+		marginTop: theme.spacing(8 + 4),
+		height: 'calc(100vh - 64px - 32px)',
 		padding: theme.spacing(3),
 		overflowY: 'auto'
 	},
@@ -66,7 +66,7 @@ let App = (props) => {
 
 	return (
 		<Provider store={store}>
-			<MuiThemeProvider theme={theme}>
+			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<AppBar />
 				<div className={classes.gridWrapper}>
@@ -80,7 +80,7 @@ let App = (props) => {
 					</Grid>
 				</div>
 				<SnackBarContainer />
-			</MuiThemeProvider>
+			</ThemeProvider>
 		</Provider>
 	)
 }
