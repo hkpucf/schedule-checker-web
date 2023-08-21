@@ -20,11 +20,9 @@ import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
 	alertBar: {
-		padding: theme.spacing(0, 2),
-		height: theme.spacing(4),
+		padding: theme.spacing(.5, 2),
 		background: theme.palette.warning.main,
 		color: theme.palette.warning.contrastText,
-		lineHeight: '32px'
 	},
 	dialogAction: {
 		textAlign: 'right'

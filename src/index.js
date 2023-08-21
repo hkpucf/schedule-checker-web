@@ -8,8 +8,13 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { ThemeProvider, createTheme, makeStyles } from '@material-ui/core/styles'
 import { blue, teal } from '@material-ui/core/colors'
-import { CssBaseline, Grid } from '@material-ui/core'
+import {
+	Box,
+	CssBaseline,
+	Grid
+} from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
+import StopServiceAlert from './component/StopServiceAlert.js'
 import AppBar from './container/AppBarContainer.js'
 import SearchPanelContainer from './container/SearchPanelContainer.js'
 import ResultContainer from './container/ResultContainer.js'
@@ -35,8 +40,7 @@ const theme = createTheme({
 
 const useStyles = makeStyles((theme) => ({
 	gridWrapper: {
-		marginTop: theme.spacing(8 + 4),
-		height: 'calc(100vh - 64px - 32px)',
+		flexGrow: 1,
 		padding: theme.spacing(3),
 		overflowY: 'auto'
 	},
@@ -68,17 +72,20 @@ let App = (props) => {
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<AppBar />
-				<div className={classes.gridWrapper}>
-					<Grid container spacing={3}>
-						<Grid item xs={12} md={4}>
-							<SearchPanelContainer />
+				<Box display='flex' flexDirection='column' height='100vh'>
+					<StopServiceAlert />
+					<AppBar position='relative' />
+					<div className={classes.gridWrapper}>
+						<Grid container spacing={3}>
+							<Grid item xs={12} md={4}>
+								<SearchPanelContainer />
+							</Grid>
+							<Grid item xs={12} md={8} className={classes.grid}>
+								<ResultContainer />
+							</Grid>
 						</Grid>
-						<Grid item xs={12} md={8} className={classes.grid}>
-							<ResultContainer />
-						</Grid>
-					</Grid>
-				</div>
+					</div>
+				</Box>
 				<SnackBarContainer />
 			</ThemeProvider>
 		</Provider>

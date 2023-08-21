@@ -38,7 +38,7 @@ let AppBarContainer = memo((props) => {
 	}
 
 	return (
-		<AppBar hasCopy={(fetchedList.length > 0)} onCopy={onCopy} />
+		<AppBar hasCopy={(fetchedList.length > 0)} onCopy={onCopy} {...props} />
 	)
 })
 

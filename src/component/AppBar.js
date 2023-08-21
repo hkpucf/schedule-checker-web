@@ -14,25 +14,22 @@ import {
 	FileCopy as CopyIcon
 } from '@material-ui/icons'
 
-import StopServiceAlert from './StopServiceAlert.js'
-
 const useStyles = makeStyles({
 	grow: {
 		flexGrow: 1
 	}
 })
 
-let AppBar = memo((props) => {
+let AppBar = memo(({hasCopy, onCopy, ...props}) => {
 	const classes = useStyles()
 	return (
-		<MUIAppBar>
-			<StopServiceAlert />
+		<MUIAppBar {...props}>
 			<Toolbar>
 				<Typography variant="h6" color="inherit" className={classes.grow}>
 					Room Search
 				</Typography>
-				<Zoom in={props.onCopy && props.hasCopy}>
-					<IconButton color="inherit" onClick={props.onCopy}>
+				<Zoom in={onCopy && hasCopy}>
+					<IconButton color="inherit" onClick={onCopy}>
 						<CopyIcon />
 					</IconButton>
 				</Zoom>
