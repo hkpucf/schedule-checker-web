@@ -35,7 +35,10 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
 	gridWrapper: {
-		padding: theme.spacing(11, 3, 3)
+		marginTop: theme.spacing(8),
+		height: 'calc(100vh - 64px)',
+		padding: theme.spacing(3),
+		overflowY: 'auto'
 	},
 	grid: {
 		position: 'relative'
